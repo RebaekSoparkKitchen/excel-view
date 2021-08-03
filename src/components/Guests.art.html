@@ -1,0 +1,242 @@
+<table
+  class="oneColumnContentTable responsive-table"
+  width="100%"
+  border="0"
+  cellpadding="0"
+  cellspacing="0"
+  style="border: none"
+>
+  <tbody>
+    <tr>
+      <td width="100%" align="center">
+        <table
+          class="responsive-table"
+          cellspacing="0"
+          cellpadding="0"
+          border="0"
+          width="580"
+        >
+          <tbody>
+            <tr>
+              <td>
+                <!-- HEADLINE -->
+                <!-- CONTENT_BLOCK_1 mandatory -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tbody>
+                    <tr>
+                      <td height="32">
+                        <div style="width: 100%; height: 32px"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding: 0"
+                        class="mobile-wrapper"
+                      >
+                        <table
+                          cellpadding="0"
+                          cellspacing="0"
+                          border="0"
+                          width="100%"
+                          align="right"
+                          class="responsive-table"
+                        >
+                          <tbody>
+                            <tr>
+                              <td style="padding: 0px 0 0px 0">
+                                <table
+                                  width="100%"
+                                  border="0"
+                                  cellspacing="0"
+                                  cellpadding="0"
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td align="left"></td>
+                                    </tr>
+
+                                    <tr>
+                                      <td align="left">
+                                        <div
+                                          style="
+                                            font-size: 16px;
+                                            font-family: 'Microsoft YaHei',
+                                              Arial, Helvetica, sans-serif;
+                                            line-height: 180%;
+                                            text-align: left;
+                                          "
+                                        >
+                                          <table
+                                            class="responsive-table"
+                                            width="100%"
+                                          >
+                                            <tbody>
+                                              <tr>
+                                                <td>
+                                                  <p></p>
+
+                                                  <div
+                                                    style="
+                                                      font-family: 'Microsoft YaHei',
+                                                        Arial, Helvetica,
+                                                        sans-serif;
+                                                      font-size: 16px;
+                                                      line-height: 180%;
+                                                      color: rgb(0, 0, 0);
+                                                      padding-bottom: 20px;
+                                                    "
+                                                  >
+                                                    <div
+                                                      style="
+                                                        font-family: Microsoft
+                                                            YaHei,
+                                                          Arial, Helvetica,
+                                                          sans-serif;
+                                                        color: rgb(0, 0, 0);
+                                                        font-size: 16px;
+                                                      "
+                                                    >
+                                                      <strong
+                                                        >嘉宾介绍：</strong
+                                                      >
+                                                    </div>
+                                                  </div>
+                                                  {{if hasGuestIntro}} {{each
+                                                  guests}} {{if $index > 0}}
+
+                                                  <div>&nbsp;</div>
+                                                  {{/if}}
+                                                  <div
+                                                    style="
+                                                      margin-bottom: 5px;
+                                                      font-size: 16px;
+                                                    "
+                                                  >
+                                                    <strong
+                                                      ><span
+                                                        style="
+                                                          color: rgb(0, 0, 0);
+                                                          font-size: 16px;
+                                                        "
+                                                        >{{@$value.name}}</span
+                                                      ></strong
+                                                    ><strong
+                                                      >&nbsp;
+                                                      <span
+                                                        style="
+                                                          color: rgb(0, 0, 0);
+                                                          font-size: 16px;
+                                                        "
+                                                        >{{@$value.title}}</span
+                                                      ></strong
+                                                    >
+                                                  </div>
+
+                                                  {{if $value.introduction}}
+                                                  <div
+                                                    style="
+                                                      color: rgb(0, 0, 0);
+                                                      font-size: 16px;
+                                                    "
+                                                  >
+                                                    <span
+                                                      style="
+                                                        color: rgb(0, 0, 0);
+                                                        font-size: 16px;
+                                                      "
+                                                      >{{@$value.introduction}}</span
+                                                    >
+                                                  </div>
+
+                                                  {{/if}} {{/each}} {{else}}
+                                                  <table
+                                                    cellpadding="0"
+                                                    cellspacing="0"
+                                                    border="0"
+                                                    width="100%"
+                                                    align="left"
+                                                    style="
+                                                      font-size: 16px;
+                                                      color: rgb(0, 0, 0);
+                                                      border: 0;
+                                                    "
+                                                  >
+                                                    {{each guests}} {{set
+                                                    padding = 7}} {{set
+                                                    paddingTop = $index == 0 ?
+                                                    padding * 3 : padding}}
+                                                    {{set paddingBottom = $index
+                                                    == guests.length - 1 ?
+                                                    padding * 3 : padding}}
+                                                    <tr
+                                                      style="
+                                                        border: 0;
+                                                        font-size: 16px;
+                                                      "
+                                                    >
+                                                      <td
+                                                        width="17%"
+                                                        style="border-left: 10px solid #90caf9; border-bottom: 0; border-right: 0; border-top: 0; background-color: #e3f2fd; padding-left:20px; padding-top:{{paddingTop}}px; padding-bottom: {{paddingBottom}}px; vertical-align:top; font-size:16px"
+                                                      >
+                                                        <div
+                                                          style="
+                                                            font-size: 16px;
+                                                          "
+                                                        >
+                                                          {{@$value.name}}
+                                                        </div>
+                                                      </td>
+                                                      <td
+                                                        width="83%"
+                                                        style="border: 0; background-color: #e3f2fd; vertical-align:top; padding-top:{{paddingTop}}px; padding-bottom: {{paddingBottom}}px; padding-right: 20px; font-size:16px"
+                                                      >
+                                                        <div
+                                                          style="
+                                                            font-size: 16px;
+                                                          "
+                                                        >
+                                                          {{@$value.title}}
+                                                        </div>
+                                                      </td>
+                                                    </tr>
+                                                    {{/each}}
+                                                  </table>
+                                                  {{/if}}
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <!-- 32px -->
+    <tr>
+      <td height="32">
+        <div style="width: 100%; height: 32px"></div>
+      </td>
+    </tr>
+    <!-- 8px -->
+    <tr bgcolor="#FFFFFF" style="color: #ffffff">
+      <td height="8">
+        <div style="width: 100%; height: 8px"></div>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,300 @@
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tbody>
+                    <tr>
+                      <td width="100%" align="center">
+                        <!-- Light HEADLINE section -->
+                        <!-- Dark HEADLINE section -->
+                        <table
+                          class="main-headline wrapper"
+                          align="center"
+                          width="100%"
+                          border="0"
+                          cellpadding="0"
+                          cellspacing="0"
+                        >
+                          <tbody>
+                            <tr style="background-color: #3c3c3c">
+                              <td
+                                align="center"
+                                valign="middle"
+                                width="75%"
+                                style="
+                                  background-color: #3c3c3c;
+                                  vertical-align: middle;
+                                "
+                              >
+                                <table
+                                  width="91%"
+                                  border="0"
+                                  align="center"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  style="min-width: 280px"
+                                >
+                                  <tbody>
+                                    <!-- 32px -->
+                                    <tr>
+                                      <td height="32">
+                                        <div style="height: 32px"></div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                      {{if options.title}}
+                                        <table
+                                          border="0"
+                                          align="center"
+                                          cellpadding="0"
+                                          cellspacing="0"
+                                          style="width: 100%; min-width: 280px"
+                                        >
+                                          <tbody>
+                                            <tr>
+                                              <td align="center">
+                                                <div
+                                                  style="
+                                                    line-height: 35px;
+                                                    font-family: 'Microsoft YaHei',
+                                                      Arial, Helvetica,
+                                                      sans-serif;
+                                                    font-size: 25px;
+                                                    max-width: 580px;
+                                                    overflow-wrap: break-word;
+                                                    text-align: center;
+                                                    color: #ffffff;
+                                                  ">
+                                                  <b>{{@title}}</b>
+                                                  </div>
+
+                                                <!-- 
+                                                <p style="margin:0"><span style="font-size:0; line-height:0">&nbsp;</span></p>
+                                                -->
+                                              </td>
+                                            </tr>
+                                            {{set headerTextMargin = options.date ? '20' : '10'}}
+                                            <tr>
+                                              <td height="{{headerTextMargin}}">
+                                                <div
+                                                  style="width: 100%; height: {{headerTextMargin}}px"
+                                                ></div>
+                                              </td>
+                                            </tr>
+                                            <!--
+                                            <tr height="{{headerTextMargin}}">
+                                            </tr>
+                                            -->
+                                            <tr>
+                                              <td>
+                                                <p style="margin:0"><span style="font-size:0; line-height:0">&nbsp;</span></p>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                        {{/if}}
+                                        {{if options.date}}
+                                        <table
+                                          cellpadding="0"
+                                          cellspacing="0"
+                                          border="0"
+                                          style="
+                                            width: 100%;
+                                            min-width: 280px;
+                                            border: none;
+                                          "
+                                        >
+                                          <tbody>
+                                            <!-- 1px -->
+                                            <tr>
+                                              <td height="1">
+                                                <div
+                                                  style="
+                                                    width: 100%;
+                                                    height: 1px;
+                                                  "
+                                                ></div>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="center"
+                                                style="color: white"
+                                              >
+                                                <div
+                                                  style="
+                                                    font-size: 18px;
+                                                    font-family: 'Microsoft YaHei',
+                                                      Arial, Helvetica,
+                                                      sans-serif;
+                                                    line-height: 23px;
+                                                    text-align: center;
+                                                    color: rgb(255, 255, 255);
+                                                  "
+                                                >
+                                                  <p>{{meetingTime}}</p>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                        {{/if}}
+                                        <table
+                                          cellpadding="0"
+                                          cellspacing="0"
+                                          border="0"
+                                          style="
+                                            width: 100%;
+                                            min-width: 280px;
+                                            border: none;
+                                          "
+                                        >
+                                          <tbody>
+                                          {{if options.title || options.date}}
+                                            <!-- 20px only appears when options.title or options.date exists-->
+                                            <tr height="20">
+                                               
+
+                                              <p style="margin:0"><span style="font-size:0; line-height:0">&nbsp;</span></p>
+                                            </tr>
+                                            {{/if}}
+                                            <tr>
+                                              <td align="center">
+                                                <div
+                                                  style="
+                                                    font-size: 16px;
+                                                    font-family: 'Microsoft YaHei',
+                                                      Arial, Helvetica,
+                                                      sans-serif;
+                                                    line-height: 22px;
+                                                    color: rgb(255, 255, 255);
+                                                  "
+                                                >
+                                                {{block 'button'}}
+                                                {{if options.buttonColor === 'black'}}
+                                                  <table
+                                                    border="0"
+                                                    cellpadding="0"
+                                                    cellspacing="0"
+                                                    style="border: none"
+                                                    class="mce-item-table"
+                                                  >
+                                                    <tbody>
+                                                      <tr>
+                                                        <td
+                                                          class="button"
+                                                          valign="middle"
+                                                          style="
+                                                            font-weight: normal;
+                                                            font-family: 'Microsoft YaHei',
+                                                              Arial, Helvetica,
+                                                              sans-serif;
+                                                            font-size: 16px;
+                                                            padding: 8px 12px;
+                                                            text-align: center;
+                                                            color: #ffffff;
+                                                            border: solid 1px
+                                                              #ffffff;
+                                                            max-width: 225px;
+                                                          "
+                                                        >
+                                                          <p style="margin: 0">
+                                                            <a
+                                                              href={{@'\"' + registerUrl + '\"'}}
+                                                              target="_blank"
+                                                              style="
+                                                                font-family: Arial;
+                                                                font-size: 16px;
+                                                                line-height: 24px;
+                                                                color: #ffffff;
+                                                                text-align: center;
+                                                                text-decoration: none;
+                                                              "
+                                                              data-sap-hpa-ceimo-link-alias="CTA"
+                                                              data-sap-hpa-ceimo-ioi-link={{@'\"' + ioi + '\"'}}
+                                                              rel="noopener" >
+                                                              {{button.text}}
+                                                            </a>
+                                                          </p>
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                  {{else if options.buttonColor === 'blue'}}
+                                                  <table
+                                                    style="border: none"
+                                                    border="0"
+                                                    cellspacing="0"
+                                                    cellpadding="0"
+                                                    class="mce-item-table"
+                                                    data-mce-selected="1"
+                                                  >
+                                                    <tbody>
+                                                      <tr>
+                                                        <td
+                                                          class="button"
+                                                          style="
+                                                            background-color: #008fd3;
+                                                            font-weight: normal;
+                                                            font-family: Arial,
+                                                              Helvetica,
+                                                              sans-serif;
+                                                            font-size: 16px;
+                                                            padding: 8px 12px;
+                                                            text-align: center;
+                                                            color: #ffffff;
+                                                            max-width: 225px;
+                                                            border: none;
+                                                          "
+                                                          valign="middle"
+                                                        >
+                                                          <p style="margin: 0">
+                                                            <a
+                                                              style="
+                                                                font-family: Arial;
+                                                                font-size: 16px;
+                                                                line-height: 24px;
+                                                                color: #ffffff;
+                                                                text-align: center;
+                                                                text-decoration: none;
+                                                              "
+                                                              title={{@'\"' + button.text + '\"'}}
+                                                              href= {{@'\"' + registerUrl + '\"'}}
+                                                              target="_blank"
+                                                              rel="noopener"
+                                                              data-mce-selected="1"
+                                                              data-sap-hpa-ceimo-link-alias="CTA"
+                                                              data-sap-hpa-ceimo-ioi-link={{@'\"' + ioi + '\"'}}
+                                                              >{{button.text}}</a
+                                                            >
+                                                          </p>
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                  {{/if}}
+                                                  {{/block}}
+                                                </div>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                    <!-- 32px -->
+                                    <tr>
+                                      <td height="32">
+                                        <div
+                                          style="width: 100%; height: 32px"
+                                        ></div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
