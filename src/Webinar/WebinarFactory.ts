@@ -18,7 +18,9 @@ const transfer = async (rawData): Promise<Webinar> => {
 
   const hasGuestCol = true;
   const hasGuestIntro = true;
-  const mainText = Utils.textProcess(basic['邮件正文']);
+  const mainText = Utils.textProcess(
+    Utils.paragraphText(Utils.repSign(basic['邮件正文']))
+  );
   const meetingTime = Utils.dateProcess(basic['会议日期']);
   const meetingUrl = basic['报名链接'];
   const registerUrl = basic['报名链接'];
@@ -26,14 +28,14 @@ const transfer = async (rawData): Promise<Webinar> => {
   const qr = await Utils.qrFactory(meetingUrl);
   const schedule = Utils.agendaProcess(agendas, guests);
 
-  const title = Utils.textProcess(basic['正文标题']);
+  const title = Utils.textProcess(basic['正文标题'], 'single');
   const ioi = '';
   const buttonColor: ButtonColor = 'black' as ButtonColor;
   const promotionButtonColor: ButtonColor = 'blue' as ButtonColor;
   const options = {
-    buttonColor: buttonColor,
-    title: false,
-    date: false,
+    buttonColor: rawData.options['按钮颜色'],
+    title: rawData.options['标题显示'],
+    date: rawData.options['日期显示'],
     promotionButton: {
       enable: false,
       color: promotionButtonColor,
@@ -63,9 +65,4 @@ const transfer = async (rawData): Promise<Webinar> => {
   };
 };
 
-const parser = new DataParser('./装饰服务.xlsx');
-transfer(parser.data).then((data) => {
-  let webinar = template(__dirname + '/../pages/Webinar/event.art.html', data);
-  webinar = Render.addSpace(webinar);
-  fs.writeFileSync('./webinar.html', webinar);
-});
+export default transfer;

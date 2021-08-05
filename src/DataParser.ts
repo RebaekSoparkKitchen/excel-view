@@ -1,5 +1,6 @@
 var XLSX = require('xlsx');
 import * as _ from 'lodash';
+import { BasicData } from './typings/Excel';
 
 export default class DataParser {
   public workbook;
@@ -19,18 +20,30 @@ export default class DataParser {
     this.sheetNames = this.workbook.SheetNames;
 
     this.agendaNames = this.extractAgendaNames(this.sheetNames);
-    this.data.basic = this.basicInfo('Utilities');
+    this.data.basic = this.parseBasic('Utilities');
     this.data.agendas = this.extractAgendaInfo(this.agendaNames);
     this.data.guests = this.guestsInfo('Guests');
+    this.data.options = this.parseOptions('Options');
   }
 
-  public basicInfo(sheetName: string) {
+  public parseBasic(sheetName: string) {
     const basic = XLSX.utils.sheet_to_json(this.workbook.Sheets[sheetName], {
       dateNF: 'dd/mm/yyyy',
     });
     const info = {};
     for (let item of basic) {
       info[item['模块']] = item['内容'];
+    }
+    return info;
+  }
+
+  public parseOptions(sheetName: string) {
+    const basic = XLSX.utils.sheet_to_json(this.workbook.Sheets[sheetName], {
+      dateNF: 'dd/mm/yyyy',
+    });
+    const info = {};
+    for (let item of basic) {
+      info[item['设置']] = item['内容'];
     }
     return info;
   }
@@ -63,13 +76,3 @@ export default class DataParser {
     return agendas;
   }
 }
-
-//const d = new DataParser('./Webinar/webinar.xlsx');
-// console.log(d.agendaNames(d.sheetNames));
-// console.log(d.sheetNames);
-
-//console.log(d.data);
-//console.log(d.basicInfo(d.data.basic));
-
-//console.log(d.basicInfo(d.data.basic));
-//console.log(d.agendaInfo(d.data.agenda));
