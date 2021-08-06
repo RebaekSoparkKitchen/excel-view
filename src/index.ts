@@ -1,8 +1,10 @@
 const template = require('art-template');
 const fs = require('fs');
 import DataParser from './DataParser';
-import transfer from './Webinar/WebinarFactory';
+import webinarTransfer from './Factory/WebinarFactory';
+import offlineTransfer from './Factory/OfflineFactory';
 import Render from './Render';
+import Utils from './Utils';
 
 // given category, get the filenames in certain folder
 const fileNames = (category: 'webinar' | 'offline'): string[] => {
@@ -23,19 +25,33 @@ const generate = (category: 'webinar' | 'offline') => {
   };
   // generate a single file
   const genSingle = (name: string) => {
-    const parser = new DataParser(`../webinar/excel/${name}.xlsx`);
-
-    transfer(parser.data).then((data) => {
-      let webinar = template(
+    const parser = new DataParser(
+      `../${category}/excel/${name}.xlsx`,
+      category
+    );
+    const versions = Utils.versionProcess(parser.data);
+    const render = (data, saveName, category) => {
+      let view = template(
         __dirname + `/pages/${capital(category)}/event.art.html`,
         data
       );
-      webinar = Render.addSpace(webinar);
-      fs.writeFileSync(`../webinar/dist/${name}.html`, webinar);
-    });
+      view = Render.addSpace(view);
+      fs.writeFileSync(`../${category}/dist/${saveName}.html`, view);
+    };
+    if (category === 'webinar') {
+      for (let item of versions) {
+        const saveName = item.alias ? `${item.alias} - ${name}` : name;
+        webinarTransfer(item.data).then((data) => {
+          render(data, saveName, category);
+        });
+      }
+    } else {
+      render(offlineTransfer(parser.data), name, category);
+    }
   };
   const fileList = fileNames(category);
   fileList.forEach((item) => genSingle(item));
 };
 
-generate('webinar');
+generate('offline');
+// console.log(fileNames('offline'));

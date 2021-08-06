@@ -1,13 +1,15 @@
 var XLSX = require('xlsx');
 import * as _ from 'lodash';
 import { BasicData } from './typings/Excel';
+type Agenda = { title: string; data: string[][] };
 
 export default class DataParser {
   public workbook;
   public sheetNames;
   public agendaNames;
   public data;
-  constructor(fileName: string) {
+  public category;
+  constructor(fileName: string, category: 'webinar' | 'offline') {
     this.data = {};
     this.workbook = XLSX.readFile(fileName, {
       type: 'binary',
@@ -18,6 +20,7 @@ export default class DataParser {
       dateNF: 'dd"."mm"."yyyy',
     });
     this.sheetNames = this.workbook.SheetNames;
+    this.category = category;
 
     this.agendaNames = this.extractAgendaNames(this.sheetNames);
     this.data.basic = this.parseBasic('Utilities');
@@ -59,7 +62,7 @@ export default class DataParser {
   }
 
   public extractAgendaInfo(sheetNames: string[]) {
-    const agendas: string[][][] = sheetNames.map((sheetName) => {
+    const agendas: Agenda[] = sheetNames.map((sheetName) => {
       let data: string[][] = XLSX.utils.sheet_to_json(
         this.workbook.Sheets[sheetName],
         {
@@ -68,9 +71,11 @@ export default class DataParser {
           raw: false,
         }
       );
-      data = data.slice(2);
+      const title = this.category === 'offline' ? data[1][1] : '';
+      data = this.category === 'offline' ? data.slice(3) : data.slice(2);
       data = data.filter((item) => item.length > 0);
-      return data;
+
+      return { data, title };
     });
 
     return agendas;

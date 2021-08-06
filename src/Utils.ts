@@ -2,6 +2,7 @@ import Render from './Render';
 import { Guest } from './typings/Offline';
 import axios from 'axios';
 const replaceall = require('replaceall');
+const _ = require('lodash');
 
 // find all patterns in the text and return the index list
 // params：text : the long content need to be scaned
@@ -237,6 +238,32 @@ function repSign(s) {
   return s;
 }
 
+type version = { alias: string; url: string; data: any };
+
+function versionProcess(rawData): version[] {
+  const links = [];
+  const { basic } = rawData;
+  for (let key in basic) {
+    if (key.indexOf('报名链接') !== -1) {
+      const alias =
+        key.indexOf('-') === -1
+          ? ''
+          : key.split('-')[key.split('-').length - 1].trim();
+      const url =
+        typeof basic[key] === 'string' ? basic[key].trim() : basic[key];
+      links.push({ alias, url });
+      delete basic[key];
+    }
+  }
+  for (let item of links) {
+    // basic['报名链接'] = item.url;
+    const data = _.cloneDeep(rawData);
+    data.basic['报名链接'] = item.url;
+    item.data = data;
+  }
+  return links;
+}
+
 export default {
   paragraphText,
   textProcess,
@@ -247,6 +274,7 @@ export default {
   guestsProcess,
   qrFactory,
   repSign,
+  versionProcess,
 };
 
 // const test = `
