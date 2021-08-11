@@ -3,11 +3,12 @@ const fs = require('fs');
 import DataParser from './DataParser';
 import webinarTransfer from './Factory/WebinarFactory';
 import offlineTransfer from './Factory/OfflineFactory';
+import assetTransfer from './Factory/AssetFactory';
 import Render from './Render';
 import Utils from './Utils';
 
 // given category, get the filenames in certain folder
-const fileNames = (category: 'webinar' | 'offline'): string[] => {
+const fileNames = (category: 'webinar' | 'offline' | 'asset'): string[] => {
   const names: string[] = [];
   const files: string[] = fs.readdirSync(`../${category}/excel`);
   files.forEach(function (item: string) {
@@ -18,7 +19,7 @@ const fileNames = (category: 'webinar' | 'offline'): string[] => {
   return names;
 };
 
-const generate = (category: 'webinar' | 'offline') => {
+const generate = (category: 'webinar' | 'offline' | 'asset') => {
   // map webinar / offline to capital as the same with the folder name
   const capital = (str) => {
     return str.trim().toLowerCase().replace(str[0], str[0].toUpperCase());
@@ -32,7 +33,7 @@ const generate = (category: 'webinar' | 'offline') => {
     const versions = Utils.versionProcess(parser.data);
     const render = (data, saveName, category) => {
       let view = template(
-        __dirname + `/pages/${capital(category)}/event.art.html`,
+        __dirname + `/pages/${capital(category)}/index.art.html`,
         data
       );
       view = Render.addSpace(view);
@@ -45,13 +46,17 @@ const generate = (category: 'webinar' | 'offline') => {
           render(data, saveName, category);
         });
       }
-    } else {
+    } else if (category === 'offline') {
       render(offlineTransfer(parser.data), name, category);
+    } else if (category === 'asset') {
+      assetTransfer(parser.data).then((data) => {
+        render(data, name, category);
+      });
     }
   };
   const fileList = fileNames(category);
   fileList.forEach((item) => genSingle(item));
 };
 
-generate('offline');
+generate('asset');
 // console.log(fileNames('offline'));

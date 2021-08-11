@@ -93,7 +93,7 @@ function paragraphListToText(paragraph: Paragraph[]) {
       text = `<li>${text.trim()}</li>`;
       str += text;
     });
-    return `<ul>${str}</ul>`;
+    return `<ul>${str}</ul><br>`;
   };
   const strProcess = (text: string, last: boolean = false) => {
     if (!last) return `<div>${text.trim()}</div><br>`;
@@ -264,6 +264,29 @@ function versionProcess(rawData): version[] {
   return links;
 }
 
+const setParams = (link, param, value) => {
+  let linkText = link;
+  if (link.indexOf('http') === -1) {
+    linkText = `https://${link}`;
+  }
+  const url = new URL(linkText);
+  url.searchParams.set(param, value);
+  return url.href;
+};
+
+// ioiSourceMap
+const ioiSourceMap = (data, ioiLib) => {
+  for (let value in ioiLib) {
+    if (
+      ioiLib[value] &&
+      data &&
+      ioiLib[value].toLowerCase() === data.toLowerCase()
+    )
+      return value;
+  }
+  return data;
+};
+
 export default {
   paragraphText,
   textProcess,
@@ -275,30 +298,6 @@ export default {
   qrFactory,
   repSign,
   versionProcess,
+  setParams,
+  ioiSourceMap,
 };
-
-// const test = `
-// •	技术及服务标准的有效管控，如何保证一线人员的技术水准和服务质量？
-// •	利用有效的经营管理工具对客户分层级管理，让客户到碗里来？
-// •	如何管控外包团队，如何实时掌控进度，实现完美交付？
-// 我国建筑装饰行业经过近30年的快速发展，已逐渐走向成熟。从设计标准、工程规模到资金投入、新技术和新材料的应用等都得到了前所未有的发展。近年来，伴随中国经济的快速增长以及相关行业 (房地产、建筑) 的蓬勃发展，建筑装饰服务行业愈加显示出了其巨大的发展潜力，市场增长空间以平均每年20%左右的速度递增。
-
-// 而在建筑装饰行业中又以住宅装饰服务的增长势头最为强劲，该行业市场化运行较早，民营企业是参与行业竞争和推动行业发展的主力军；同时装饰服务是一个高度分散且重线下的行业，对人有着高度的依赖。伴随国内刚需市场的繁荣，越来越多的成长型装饰服务企业开始寻求规模化的扩张，结果却往往不尽人意。究其原因包括：中小企业现金流紧张普遍存在，融资难；粗犷型管理模式，缺乏精细化管理的平台；企业规模普遍小，组织化程度低等等。很多中小装饰企业都在想，如何才能像麦当劳、海底捞一样，在快速规模化扩张的过程中，保证服务质量，持续留住客户，毫无疑问，标准化管理体系的建设是企业先行的第一步。
-
-//     我们诚挚的邀请您参加将于2021年8月18日进行的“乘云而上 - 装饰服务行业提升利润与客户满意度”线上研讨会，与您共同讨论：
-
-// •	技术及服务标准的有效管控，如何保证一线人员的技术水准和服务质量？
-// •	利用有效的经营管理工具对客户分层级管理，让客户到碗里来？
-// •	如何管控外包团队，如何实时掌控进度，实现完美交付？`;
-// console.log(liTagList(test));
-// console.log(test.substr(110, 1));
-
-// console.log([1, 10, 5, 4, 200, 1].sort(compare));
-// const test1 = findNearestBiggerNum(10, [1, 3, 12, 20]) === 12;
-// const test2 = findNearestBiggerNum(10, [1, 3]) === null;
-// console.log(test1);
-// console.log(test2);
-// console.log(paragraphText(test));
-
-// console.log(liContentsList(test));
-// console.log(splitParagraph(test));

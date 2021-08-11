@@ -9,7 +9,7 @@ export default class DataParser {
   public agendaNames;
   public data;
   public category;
-  constructor(fileName: string, category: 'webinar' | 'offline') {
+  constructor(fileName: string, category: 'webinar' | 'offline' | 'asset') {
     this.data = {};
     this.workbook = XLSX.readFile(fileName, {
       type: 'binary',
@@ -21,12 +21,13 @@ export default class DataParser {
     });
     this.sheetNames = this.workbook.SheetNames;
     this.category = category;
-
-    this.agendaNames = this.extractAgendaNames(this.sheetNames);
     this.data.basic = this.parseBasic('Utilities');
-    this.data.agendas = this.extractAgendaInfo(this.agendaNames);
-    this.data.guests = this.guestsInfo('Guests');
-    this.data.options = this.parseOptions('Options');
+    if (category === 'webinar' || category === 'offline') {
+      this.agendaNames = this.extractAgendaNames(this.sheetNames);
+      this.data.agendas = this.extractAgendaInfo(this.agendaNames);
+      this.data.guests = this.guestsInfo('Guests');
+      this.data.options = this.parseOptions('Options');
+    }
   }
 
   public parseBasic(sheetName: string) {
