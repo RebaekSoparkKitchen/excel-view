@@ -5,7 +5,8 @@ export interface Asset {
   banner: string;
   code: string;
   subject: string;
-  button: Button;
+  heroButton: Button;
+  footerButton: Button;
   mainText: string;
   title: string;
   ioi: string;

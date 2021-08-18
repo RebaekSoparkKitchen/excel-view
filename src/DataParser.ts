@@ -19,6 +19,8 @@ export default class DataParser {
       strip: false,
       dateNF: 'dd"."mm"."yyyy',
     });
+    // console.log(this.workbook['Sheets']['Utilities']);
+
     this.sheetNames = this.workbook.SheetNames;
     this.category = category;
     this.data.basic = this.parseBasic('Utilities');
@@ -33,12 +35,36 @@ export default class DataParser {
   public parseBasic(sheetName: string) {
     const basic = XLSX.utils.sheet_to_json(this.workbook.Sheets[sheetName], {
       dateNF: 'dd/mm/yyyy',
+      raw: false,
     });
+
     const info = {};
+    const data = this.workbook['Sheets']['Utilities'];
     for (let item of basic) {
-      info[item['模块']] = item['内容'];
+      if (item['模块'] === 'Body' || item['模块'] === '邮件正文') {
+        const bodyCell = `B${this.findKeyIndex(item['模块'], data)}`;
+        info[item['模块']] =
+          this.workbook['Sheets']['Utilities'][bodyCell]['h'];
+      } else {
+        info[item['模块']] = item['内容'];
+      }
     }
+    // console.log(info);
+
     return info;
+  }
+
+  private findKeyIndex(key: string, data: any) {
+    for (let i in data) {
+      if (
+        i.indexOf('A') !== -1 &&
+        data[i]['v'] &&
+        data[i]['v'].trim() === key
+      ) {
+        return i.replace('A', '');
+      }
+    }
+    return null;
   }
 
   public parseOptions(sheetName: string) {

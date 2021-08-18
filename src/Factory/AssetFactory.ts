@@ -13,20 +13,46 @@ const transfer = async (rawData): Promise<Asset> => {
   const code = textTrim(basic['CRM Campaign Code']);
   const subject = textTrim(basic['Subject']);
   // add campaign code and process the url link
-  const link = Utils.setParams(textTrim(basic['URL']), 'campaigncode', code);
-  const button = { text: textTrim(basic['CTA']), href: link };
-  const mainText = Utils.textProcess(
-    Utils.paragraphText(Utils.repSign(basic['Body']))
+  const link = Utils.setParams(
+    textTrim(basic['URL'] || basic['URL1'] || basic['URL 1']),
+    'campaigncode',
+    code
   );
-  const title = Utils.textProcess(basic['Headline'], 'single');
+  let link2;
+  if (basic['URL2'] || basic['URL 2']) {
+    link2 = Utils.setParams(
+      textTrim(basic['URL2'] || basic['URL 2']),
+      'campaigncode',
+      code
+    );
+  }
+  const footerButton = {
+    text: textTrim(basic['Footer CTA']),
+    href: link2 ? link2 : link,
+  };
+  const heroButton = { text: textTrim(basic['Hero CTA']), href: link };
+
   const ioiLib = await getIoiMap();
-  console.log(basic['IOI']);
+  const ioi = Utils.ioiSourceMap(basic['IOI'], ioiLib);
+  const mainText = Utils.paragraphText(
+    Utils.htmlTextProcess(basic['Body'], link2 ? [link, link2] : [link], ioi)
+  );
+
+  const title = Utils.textProcess(basic['Headline'], 'single');
 
   // console.log(ioiLib);
 
-  const ioi = Utils.ioiSourceMap(basic['IOI'], ioiLib);
-
-  return { previewText, banner, code, subject, button, mainText, title, ioi };
+  return {
+    previewText,
+    banner,
+    code,
+    subject,
+    heroButton,
+    footerButton,
+    mainText,
+    title,
+    ioi,
+  };
 };
 
 export default transfer;

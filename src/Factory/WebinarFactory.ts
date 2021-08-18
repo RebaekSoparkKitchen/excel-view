@@ -19,8 +19,8 @@ const transfer = async (rawData): Promise<Webinar> => {
 
   const hasGuestCol = true;
   const hasGuestIntro = true;
-  const mainText = Utils.textProcess(
-    Utils.paragraphText(Utils.repSign(basic['邮件正文']))
+  const mainText = Utils.paragraphText(
+    Utils.htmlTextProcess(basic['邮件正文'], null)
   );
   const meetingTime = Utils.dateProcess(basic['会议日期']);
   const meetingUrl = basic['报名链接'];

@@ -837,8 +837,8 @@
                                                               data-sap-hpa-ceimo-link-alias="CTA"
                                                               data-sap-hpa-ceimo-ioi-link="{{ioi}}"
                                                               rel="noopener"
-                                                              href="{{@button.href}}"
-                                                              >{{button.text}}</a
+                                                              href="{{@heroButton.href}}"
+                                                              >{{@heroButton.text}}</a
                                                             >
                                                           </p>
                                                         </td>
@@ -1031,7 +1031,7 @@
                                                         >
                                                           <p style="margin: 0">
                                                             <a
-                                                              href="{{button.href}}"
+                                                              href="{{@footerButton.href}}"
                                                               target="_blank"
                                                               style="
                                                                 font-family: Arial;
@@ -1044,7 +1044,7 @@
                                                               data-sap-hpa-ceimo-link-alias="CTA"
                                                               data-sap-hpa-ceimo-ioi-link="{{ioi}}"
                                                               rel="noopener"
-                                                              >{{button.text}}</a
+                                                              >{{@footerButton.text}}</a
                                                             >
                                                           </p>
                                                         </td>
@@ -1138,6 +1138,7 @@
                               src="https://d.dam.sap.com/a/25pDZxB"
                               alt="Banner"
                               align="left"
+                              width="640"
                               style="
                                 max-width: 640px;
                                 min-width: 278px;

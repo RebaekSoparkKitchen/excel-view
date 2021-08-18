@@ -3,6 +3,7 @@ import { Guest } from './typings/Offline';
 import axios from 'axios';
 const replaceall = require('replaceall');
 const _ = require('lodash');
+const cheerio = require('cheerio');
 
 // find all patterns in the text and return the index list
 // params：text : the long content need to be scaned
@@ -59,6 +60,7 @@ function liContentsList(text: string) {
     );
 }
 
+// transfer text to list, the core part, recognize paragraph
 type Paragraph = string | string[];
 function splitParagraph(text: string): Paragraph[] {
   if (!text) return [];
@@ -71,16 +73,25 @@ function splitParagraph(text: string): Paragraph[] {
       const item = splitedText[i].trim();
       if (item.indexOf('•') === -1) {
         accumulator.push(item);
-      } else if (accumulator.length === 0) accumulator.push([item]);
-      else if (typeof accumulator[accumulator.length - 1] === 'string')
-        accumulator.push([item]);
-      else accumulator[accumulator.length - 1].push(item);
+      } else {
+        // in this scope, we are dealing with the sentence with •
+        const liTagItem = item.replace('•', '').trim();
+        if (accumulator.length === 0) accumulator.push([liTagItem]);
+        else if (typeof accumulator[accumulator.length - 1] === 'string')
+          accumulator.push([liTagItem]);
+        else accumulator[accumulator.length - 1].push(liTagItem);
+      }
     }
   }
   // remove blank strings
   const removeBlankStringAcc = accumulator.filter(
     (value: Paragraph) => !(typeof value === 'string' && !value.trim())
   );
+  const first_sentence = removeBlankStringAcc[0];
+  // tolerance, if they provide something like 尊敬的嘉宾 , then delete it.
+  if (first_sentence.indexOf('尊敬的') !== -1 && first_sentence.length < 10) {
+    return removeBlankStringAcc.slice(1);
+  }
   return removeBlankStringAcc;
 }
 
@@ -134,13 +145,17 @@ function textProcess(text, type = 'double') {
 }
 
 // plus timezone offset and parse to string
-function dateProcess(date) {
-  const timeZoneOffset = 8;
-  //   if (!date) return '';
-  date.setHours(date.getHours() + timeZoneOffset);
-  return `${date.getFullYear()} 年 ${
-    date.getMonth() + 1
-  } 月 ${date.getDate()} 日`;
+function dateProcess(dateStr: string) {
+  // const timeZoneOffset = 8;
+  // if (!date) return '';
+  // date.setHours(date.getHours() + timeZoneOffset);
+  // return `${date.getFullYear()} 年 ${
+  //   date.getMonth() + 1
+  // } 月 ${date.getDate()} 日`;
+  if (typeof dateStr === 'string') {
+    const date = dateStr.split('/');
+    return `${date[2]} 年 ${~~date[1]} 月 ${~~date[0]} 日`;
+  }
 }
 
 function agendaProcess(agendas, guests) {
@@ -222,7 +237,7 @@ async function qrFactory(url: string): Promise<string> {
 }
 
 // change english character to chinese character
-function repSign(s) {
+function repSign(s: string): string {
   s = s.replace(
     /([\u4E00-\u9FA5]|^|\n|\r)([\,\.\?\!])(?=[\u4E00-\u9FA5]|$|\n|\r)/g,
     function (u, v, w, x) {
@@ -287,7 +302,53 @@ const ioiSourceMap = (data, ioiLib) => {
   return data;
 };
 
+// 无关的span要去掉
+// ul的解析生成
+// 只保留a , b, i三个标签
+// 还是要做智能的段落判断
+const htmlTextProcess = (str: string, url: string[], ioi: string = '') => {
+  // remove <span xxx> and </span>
+  if (!str) return '';
+  let text = str.replace(/<span[^>]+>/gim, '');
+  text = replaceall(`<br/>`, `\n`, text);
+  text = replaceall(`<br>`, `\n`, text);
+  text = replaceall(`</span>`, '', text);
+  if (text) text = text.trim();
+  // replace transfer character
+  text = replaceall(`&lt;`, `<`, text);
+  text = replaceall(`&gt;`, `>`, text);
+  if (url && url.length > 1) {
+    text = replaceall(`<a2>`, `<a href="${url[1]}">`, text);
+    text = replaceall(`</a2>`, `</a>`, text);
+  } else {
+    // from business, some users don't provide URL2 but use <a2>
+    if (text.indexOf('<a2>') !== -1 || text.indexOf('</a2>') !== -1)
+      throw new Error('No URL2 but <a2> found');
+  }
+  // deal with <a> grammer
+  const $ = cheerio.load(text, null, false);
+  $('a').each(function (i, elem) {
+    if (!url)
+      throw new Error(
+        'You are not allowed using <a> feature here since no default url found'
+      );
+    if (!$(this).attr('href')) {
+      $(this).attr('href', url[0]);
+    }
+    $(this).attr('data-sap-hpa-ceimo-link-alias', 'CTA');
+    $(this).attr('data-sap-hpa-ceimo-ioi-link', ioi);
+  });
+
+  return $.html();
+};
+
+// const test = `<span style="font-size:11pt;"><b>据调查</b></span><span style="font-size:11pt;">,到 2023 年，65% 的<a href="www.baidu.com">企业</a>将</span><span style="font-size:11pt;">投资高度</span><span style="font-size:11pt;">可配置且</span><span style="font-size:11pt;"><i>具备 AI 功能的 ERP 应用</i></span><span style="font-size:11pt;">，提高业务运营的自动化水平。而且，实现数字化转型后，企业能够应对业务中断危机，并构建创新型业务模式。<br/><br/><a>本 IDC 报告</a>重点介绍了：<br/>•\t如何专注于数字化转型战略<br/>•\t为什么转型至关重要<br/>•\t为什么智慧企业需要采用合适的技术<br/>•\t为什么客户倾向于采用集成式软件应用套件<br/>•\t如何借助数字化转型和智能技术，提高业务韧性<br/><br/>查看本报告，了解为何数字化技术对打造智慧企业至关重要。</span>`;
+// const a = htmlTextProcess(test, 'www.sap.com');
+// console.log(paragraphText(a));
+
 export default {
+  htmlTextProcess,
+  splitParagraph,
   paragraphText,
   textProcess,
   dateProcess,

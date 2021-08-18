@@ -6,6 +6,7 @@ import offlineTransfer from './Factory/OfflineFactory';
 import assetTransfer from './Factory/AssetFactory';
 import Render from './Render';
 import Utils from './Utils';
+import getVersions from './service/Versions';
 
 // given category, get the filenames in certain folder
 const fileNames = (category: 'webinar' | 'offline' | 'asset'): string[] => {
@@ -30,7 +31,8 @@ const generate = (category: 'webinar' | 'offline' | 'asset') => {
       `../${category}/excel/${name}.xlsx`,
       category
     );
-    const versions = Utils.versionProcess(parser.data);
+    const versions = getVersions(parser.data);
+
     const render = (data, saveName, category) => {
       let view = template(
         __dirname + `/pages/${capital(category)}/index.art.html`,
@@ -41,7 +43,8 @@ const generate = (category: 'webinar' | 'offline' | 'asset') => {
     };
     if (category === 'webinar') {
       for (let item of versions) {
-        const saveName = item.alias ? `${item.alias} - ${name}` : name;
+        const saveName =
+          item.alias.length !== 0 ? `(${item.alias.join('-')}) ${name}` : name;
         webinarTransfer(item.data).then((data) => {
           render(data, saveName, category);
         });
@@ -49,9 +52,20 @@ const generate = (category: 'webinar' | 'offline' | 'asset') => {
     } else if (category === 'offline') {
       render(offlineTransfer(parser.data), name, category);
     } else if (category === 'asset') {
-      assetTransfer(parser.data).then((data) => {
-        render(data, name, category);
-      });
+      const names = [];
+      for (let item of versions) {
+        let aliasPart = item.alias.join('-');
+        if (names.includes(aliasPart)) {
+          aliasPart += `'`;
+          names.push(aliasPart);
+        }
+        const saveName =
+          item.alias.length !== 0 ? `(${aliasPart}) ${name}` : name;
+        names.push(aliasPart);
+        assetTransfer(item.data).then((data) => {
+          render(data, saveName, category);
+        });
+      }
     }
   };
   const fileList = fileNames(category);
@@ -59,4 +73,5 @@ const generate = (category: 'webinar' | 'offline' | 'asset') => {
 };
 
 generate('asset');
-// console.log(fileNames('offline'));
+generate('offline');
+generate('webinar');

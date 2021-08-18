@@ -19,7 +19,10 @@ export default function transfer(rawData): Offline {
   const banner = basic['Banner'];
   const title = basic['正文标题'];
   const code = basic['CRM Campaign Code'];
-  const mainText = Utils.paragraphText(basic['邮件正文']);
+  const mainText = Utils.paragraphText(
+    Utils.htmlTextProcess(basic['邮件正文'], null)
+  );
+
   const hasGuestCol = true;
   const hasGuestIntro = true;
   const meetingTime = Utils.dateProcess(basic['会议日期']);
