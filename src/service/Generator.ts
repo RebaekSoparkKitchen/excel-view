@@ -78,7 +78,7 @@ const build = async (
 ) => {
   if (node.name.includes('.xlsx')) {
     const data = await generate(node, distPath, category);
-    data.forEach((x, index) => {
+    data.forEach((x) => {
       const fullPath = path.resolve(x.path, x.name);
       mkMulDir(x.path);
       writeFileSync(fullPath, x.content);
