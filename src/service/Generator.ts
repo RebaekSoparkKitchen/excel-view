@@ -1,5 +1,5 @@
 import { DirNode, FileNode } from './FileTree';
-import { List, Map, Record } from 'immutable';
+import { List, Map } from 'immutable';
 import webinarTransfer from '../Factory/WebinarFactory';
 import offlineTransfer from '../Factory/OfflineFactory';
 import assetTransfer from '../Factory/AssetFactory';
@@ -14,6 +14,7 @@ import DataParser from '../DataParser';
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 
 type File = { name: string; content: string; path: string };
+// given a file node, return the corresponding html file[] (in case of several versions)
 const generate = async (
   node: FileNode,
   dist: string,
@@ -61,17 +62,15 @@ const savePath = (node: FileNode, distPath: string) => {
   return path.dirname(fullPath);
 };
 
-// if all path set, do something : cb
+// makedir recursively for certain dir path
 const mkMulDir = (dirPath: string) => {
-  if (!existsSync(dirPath)) {
-    const parentDir = path.resolve(dirPath, '..');
-    if (!existsSync(parentDir)) {
-      mkMulDir(parentDir);
-    }
-    mkdirSync(dirPath);
-  }
+  if (existsSync(dirPath)) return;
+  const parentDir = path.resolve(dirPath, '..');
+  if (!existsSync(parentDir)) mkMulDir(parentDir);
+  mkdirSync(dirPath);
 };
 
+// for each file node, build compiled file in the dist
 const build = async (
   node: FileNode,
   distPath: string,
@@ -79,22 +78,22 @@ const build = async (
 ) => {
   if (node.name.includes('.xlsx')) {
     const data = await generate(node, distPath, category);
-
-    data.forEach((x) => {
+    data.forEach((x, index) => {
       const fullPath = path.resolve(x.path, x.name);
-
       mkMulDir(x.path);
       writeFileSync(fullPath, x.content);
-      // if (!existsSync(x.path)) {
-      //   mkdirSync(x.path);
-      // }
-      // writeFileSync(fullPath, x.content);
+      console.log(`${x.name} generate successfully!`);
     });
   }
 };
 
 // run over the whole tree, get each file node and do something...
-const travel = async (tree: DirNode, distPath, category, f) => {
+const travel = async (
+  tree: DirNode,
+  distPath: string,
+  category: 'asset' | 'webinar' | 'offline',
+  f
+) => {
   for (let node of tree.children) {
     switch (node.type) {
       case 'FILE':
@@ -115,21 +114,7 @@ const travel = async (tree: DirNode, distPath, category, f) => {
 };
 
 // test script
-const dist = '../../asset/dist';
-const tree = fileTree('../../asset/excel');
-travel(tree, dist, 'asset', build);
-// console.log(path.resolve(dist, '..'));
-
-// const btp = <DirNode>tree.children[tree.children.length - 1];
-// const btp1 = <DirNode>btp.children[4];
-// const file2 = <FileNode>btp1.children[1];
-// console.log(file2);
-
-// const file1: FileNode = <FileNode>tree.children[2];
-
-// generate(file2, dist, 'asset').then((data) => {
-//   console.log(data[0].name);
-//   console.log(data[0].path);
-//   console.log(data[1].name);
-//   console.log(data[1].path);
-// });
+const cat = 'asset';
+const dist = `../../${cat}/dist`;
+const tree = fileTree(`../../${cat}/excel`);
+travel(tree, dist, cat, build);
