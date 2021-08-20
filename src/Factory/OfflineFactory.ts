@@ -1,6 +1,6 @@
 import { Offline, Guest } from '../typings/Offline';
 import DataParser from '../DataParser';
-import Render from '../Render';
+import Render from '../service/Render';
 import Utils from '../Utils';
 import { ButtonColor } from '../typings/Webinar';
 

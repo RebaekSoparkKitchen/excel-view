@@ -75,7 +75,8 @@ const treeToVersions = (
   });
 };
 
-export default function versions(rawData): any[] {
+type Version = { alias: string[]; data: string };
+export default function versions(rawData): Version[] {
   const aliasMap = keyAliasMap(rawData);
   const tree = dataTree(aliasMap);
   const versions = treeToVersions(tree).toJS();
@@ -87,5 +88,5 @@ export default function versions(rawData): any[] {
     return x1;
   });
 }
-// const d = new DataParser('Asset Template.xlsx', 'asset');
+// const d = new DataParser('../../asset/excel/Asset Template.xlsx', 'asset');
 // console.log(versions(d.data));

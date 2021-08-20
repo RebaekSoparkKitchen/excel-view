@@ -20,7 +20,7 @@
     "mocha": "^9.0.3",
     "pangu": "^4.0.7",
     "replaceall": "^0.1.6",
-    "ts-node": "^10.1.0",
+    "ts-node": "^10.2.1",
     "typescript": "^4.3.5",
     "xlsx": "^0.17.0"
   }

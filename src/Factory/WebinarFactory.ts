@@ -3,7 +3,7 @@ import { Webinar } from '../typings/Webinar';
 import { ButtonColor } from '../typings/Webinar';
 
 import DataParser from '../DataParser';
-import Render from '../Render';
+import Render from '../service/Render';
 const fs = require('fs');
 const template = require('art-template');
 

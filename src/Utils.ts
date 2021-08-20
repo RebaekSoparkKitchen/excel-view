@@ -1,4 +1,4 @@
-import Render from './Render';
+import Render from './service/Render';
 import { Guest } from './typings/Offline';
 import axios from 'axios';
 const replaceall = require('replaceall');
@@ -89,7 +89,11 @@ function splitParagraph(text: string): Paragraph[] {
   );
   const first_sentence = removeBlankStringAcc[0];
   // tolerance, if they provide something like 尊敬的嘉宾 , then delete it.
-  if (first_sentence.indexOf('尊敬的') !== -1 && first_sentence.length < 10) {
+  const maxGreetingLength = 20;
+  if (
+    first_sentence.indexOf('尊敬的') !== -1 &&
+    first_sentence.length < maxGreetingLength
+  ) {
     return removeBlankStringAcc.slice(1);
   }
   return removeBlankStringAcc;
@@ -342,6 +346,9 @@ const htmlTextProcess = (str: string, url: string[], ioi: string = '') => {
   return $.html();
 };
 
+const capital = (str) => {
+  return str.trim().toLowerCase().replace(str[0], str[0].toUpperCase());
+};
 // const test = `<span style="font-size:11pt;"><b>据调查</b></span><span style="font-size:11pt;">,到 2023 年，65% 的<a href="www.baidu.com">企业</a>将</span><span style="font-size:11pt;">投资高度</span><span style="font-size:11pt;">可配置且</span><span style="font-size:11pt;"><i>具备 AI 功能的 ERP 应用</i></span><span style="font-size:11pt;">，提高业务运营的自动化水平。而且，实现数字化转型后，企业能够应对业务中断危机，并构建创新型业务模式。<br/><br/><a>本 IDC 报告</a>重点介绍了：<br/>•\t如何专注于数字化转型战略<br/>•\t为什么转型至关重要<br/>•\t为什么智慧企业需要采用合适的技术<br/>•\t为什么客户倾向于采用集成式软件应用套件<br/>•\t如何借助数字化转型和智能技术，提高业务韧性<br/><br/>查看本报告，了解为何数字化技术对打造智慧企业至关重要。</span>`;
 // const a = htmlTextProcess(test, 'www.sap.com');
 // console.log(paragraphText(a));
@@ -361,4 +368,5 @@ export default {
   versionProcess,
   setParams,
   ioiSourceMap,
+  capital,
 };

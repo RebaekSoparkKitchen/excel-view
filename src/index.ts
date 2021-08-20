@@ -4,15 +4,18 @@ import DataParser from './DataParser';
 import webinarTransfer from './Factory/WebinarFactory';
 import offlineTransfer from './Factory/OfflineFactory';
 import assetTransfer from './Factory/AssetFactory';
-import Render from './Render';
+import Render from './service/Render';
 import Utils from './Utils';
 import getVersions from './service/Versions';
 
 // given category, get the filenames in certain folder
 const fileNames = (category: 'webinar' | 'offline' | 'asset'): string[] => {
+  const pos = `../${category}/excel`;
   const names: string[] = [];
-  const files: string[] = fs.readdirSync(`../${category}/excel`);
+  const files: string[] = fs.readdirSync(pos);
   files.forEach(function (item: string) {
+    console.log(item);
+    fs;
     if (item.indexOf('xlsx') !== -1) {
       names.push(item.replace('.xlsx', ''));
     }
