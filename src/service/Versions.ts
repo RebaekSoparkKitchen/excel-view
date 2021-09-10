@@ -49,6 +49,7 @@ const treeToVersions = (
   data: List<Map<string, string[]>>
 ): List<Map<string, List<string> | Map<string, string>>> => {
   // deal with single version
+
   const generateSingle = (
     item: Map<string, string[]>,
     aliasCollector: List<string> = List([]),

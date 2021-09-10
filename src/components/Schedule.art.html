@@ -158,11 +158,10 @@
                                             </td>
                                           </tr>
 
-                                          {{/if}} {{if scheduleTitle &&
-                                          scheduleTitle.length > 0}}
+                                          {{/if}} {{if $value.title}}
                                           <tr>
                                             <td colspan="3">
-                                              <b>{{scheduleTitle[$index]}}</b>
+                                              <b>{{@$value.title}}</b>
                                             </td>
                                           </tr>
                                           <tr>
@@ -183,7 +182,7 @@
                                                 >时间</span
                                               >
                                             </td>
-                                            {{if hasGuestCol}}
+                                            {{if $value.hasGuestCol}}
                                             <td width="40%">
                                               <span
                                                 style="
@@ -204,7 +203,7 @@
                                             </td>
                                             {{else}}
 
-                                            <td width="80%">
+                                            <td width="80%" colspan="2">
                                               <span
                                                 style="
                                                   color: #000000;
@@ -215,7 +214,9 @@
                                             </td>
                                             {{/if}}
                                           </tr>
-                                          {{each $value}}
+                                          {{set isGuestColExist =
+                                          $value.hasGuestCol}} {{each
+                                          $value.agenda}}
                                           <tr class="trStandard">
                                             <td class="tdStandard">
                                               <span
@@ -226,7 +227,9 @@
                                                 >{{@$value.time}}</span
                                               >
                                             </td>
-                                            <td class="tdStandard">
+                                            <td class="tdStandard" {{if !isGuestColExist}}
+                                            colspan="2"
+                                            {{/if}}>
                                               <span
                                                 style="
                                                   color: rgb(0, 0, 0);
@@ -234,8 +237,17 @@
                                                 "
                                                 >{{@$value.content}}</span
                                               >
+                                              {{if $value.details}}
+                                              
+                                              {{set gray = "#757575";}}
+                                              <div style="
+                                              color: {{gray}};
+                                              font-size: 15px;
+                                              padding-top: 10px;
+                                            ">{{@$value.details}}</div>
+                                            {{/if}}
                                             </td>
-                                            {{if hasGuestCol}}
+                                            {{if isGuestColExist}}
                                             <td class="tdStandard">
                                               {{if $value.guests.length != 0}}
                                               {{set guests = $value.guests}}
@@ -263,7 +275,23 @@
                                             </td>
                                             {{/if}}
                                           </tr>
-                                          {{/each}} {{/each}}
+                                          {{/each}} 
+                                          {{if $value.remark}}
+                                          <!-- 10px -->
+                                            <tr>
+                                              <td height="10">
+                                                <div style="height: 10px"></div>
+                                              </td>
+                                            </tr>
+                                          <!-- remark here -->
+                                            <tr>
+                                              <td colspan="3">
+                                                <div style="font-size: 14px"><i>{{@$value.remark}}</i></div>
+                                              </td>
+                                            </tr>
+                                          {{/if}}
+                                        {{/each}}
+                                          
                                         </table>
                                       </td>
                                     </tr>

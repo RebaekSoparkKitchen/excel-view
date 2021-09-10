@@ -24,11 +24,14 @@ export default class DataParser {
     this.sheetNames = this.workbook.SheetNames;
     this.category = category;
     this.data.basic = this.parseBasic('Utilities');
+
     if (category === 'webinar' || category === 'offline') {
       this.agendaNames = this.extractAgendaNames(this.sheetNames);
       this.data.agendas = this.extractAgendaInfo(this.agendaNames);
       this.data.guests = this.guestsInfo('Guests');
       this.data.options = this.parseOptions('Options');
+    } else {
+      this.data.offers = this.parseOffers('Offers');
     }
   }
 
@@ -84,6 +87,12 @@ export default class DataParser {
     });
   }
 
+  public parseOffers(sheetName: string) {
+    return XLSX.utils.sheet_to_json(this.workbook.Sheets[sheetName], {
+      dateNF: 'dd/mm/yyyy',
+    });
+  }
+
   public extractAgendaNames(sheetNames: string[]) {
     return sheetNames.filter((sheetName) => sheetName.indexOf('Agenda') != -1);
   }
@@ -99,10 +108,11 @@ export default class DataParser {
         }
       );
       const title = this.category === 'offline' ? data[1][1] : '';
-      data = this.category === 'offline' ? data.slice(3) : data.slice(2);
+      const remark = this.category === 'offline' ? data[2][1] : '';
+      data = this.category === 'offline' ? data.slice(4) : data.slice(2);
       data = data.filter((item) => item.length > 0);
 
-      return { data, title };
+      return { data, title, remark };
     });
 
     return agendas;

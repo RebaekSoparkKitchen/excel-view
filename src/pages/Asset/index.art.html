@@ -774,6 +774,7 @@
                                           "
                                         >
                                           <tbody>
+                                            {{if heroButton}}
                                             <!-- 20px -->
                                             <tr>
                                               <td height="20">
@@ -848,6 +849,7 @@
                                                 </div>
                                               </td>
                                             </tr>
+                                            {{/if}}
                                           </tbody>
                                         </table>
                                       </td>
@@ -979,6 +981,7 @@
                                         >
                                           <tbody>
                                             <!-- 17px -->
+                                            {{if footerButton}}
                                             <tr>
                                               <td height="17">
                                                 <div
@@ -1054,6 +1057,7 @@
                                                 </div>
                                               </td>
                                             </tr>
+                                            {{/if}}
                                           </tbody>
                                         </table>
                                         <!-- Intro_Button_END -->
@@ -1107,6 +1111,309 @@
                   </tbody>
                 </table>
                 <!-- INTRO_SECTION_END-->
+                <!---OFFER_SECTION_BEGIN-->
+                {{if offers.length > 0}} {{each offers}}
+                <table
+                  class="imageTextOneColumnContentTable responsive-table"
+                  width="100%"
+                  border="0"
+                  cellpadding="0"
+                  cellspacing="0"
+                >
+                  <tbody>
+                    <!-- 17px -->
+                    <tr>
+                      <td height="17">
+                        <div style="width: 100%; height: 17px"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="100%" align="center">
+                        <table
+                          class="responsive-table"
+                          cellspacing="0"
+                          cellpadding="0"
+                          border="0"
+                          width="580"
+                        >
+                          <tbody>
+                            <tr>
+                              <td>
+                                <!-- HEADLINE -->
+                                <table
+                                  width="100%"
+                                  border="0"
+                                  cellspacing="0"
+                                  cellpadding="0"
+                                >
+                                  <tbody>
+                                    <!-- 15px -->
+                                    <tr>
+                                      <td height="15">
+                                        <div
+                                          style="width: 100%; height: 15px"
+                                        ></div>
+                                      </td>
+                                    </tr>
+
+                                    <!-- 17px -->
+                                    <tr>
+                                      <td height="17">
+                                        <div
+                                          style="width: 100%; height: 17px"
+                                        ></div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <table
+                                  cellspacing="0"
+                                  cellpadding="0"
+                                  border="0"
+                                  width="100%"
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        valign="top"
+                                        style="padding: 0"
+                                        class="mobile-wrapper"
+                                      >
+                                        <!-- 50-50-Photo -->
+                                        <table
+                                          class="imageTextContentSection"
+                                          cellspacing="0"
+                                          cellpadding="0"
+                                          border="0"
+                                          width="100%"
+                                        >
+                                          <tbody>
+                                            <tr>
+                                              <td
+                                                valign="top"
+                                                style="padding: 0"
+                                              >
+                                                <!--[if (gte mso 9)|(IE)]><table width="580" align="center"><tr><td width="278" valign="top"><![endif]-->
+                                                <!-- LEFT COLUMN -->
+                                                <table
+                                                  class="responsive-table"
+                                                  cellpadding="0"
+                                                  cellspacing="0"
+                                                  border="0"
+                                                  width="278"
+                                                  align="left"
+                                                >
+                                                  <tbody>
+                                                    <tr>
+                                                      <td valign="top">
+                                                        <table
+                                                          class="
+                                                            responsive-table
+                                                          "
+                                                          width="100%"
+                                                          cellpadding="0"
+                                                          cellspacing="0"
+                                                          border="0"
+                                                          style="width: 100%"
+                                                        >
+                                                          <tbody>
+                                                            <!-- 15px -->
+                                                            <tr>
+                                                              <td height="15">
+                                                                <div
+                                                                  style="
+                                                                    width: 100%;
+                                                                    height: 15px;
+                                                                  "
+                                                                ></div>
+                                                              </td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td
+                                                                align="left"
+                                                                valign="top"
+                                                                height="156"
+                                                              >
+                                                                <img
+                                                                  class="
+                                                                    content-img
+                                                                  "
+                                                                  src="{{@$value.image}}"
+                                                                  alt="Image"
+                                                                  height="156"
+                                                                  style="
+                                                                    max-width: 278px;
+                                                                    max-height: 156px;
+                                                                    display: block;
+                                                                    margin: auto;
+                                                                  "
+                                                                />
+                                                              </td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table>
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                                <!--[if (gte mso 9)|(IE)]></td><td width="278" valign="top"><![endif]-->
+                                                <!-- RIGHT COLUMN -->
+                                                <table
+                                                  class="responsive-table"
+                                                  cellpadding="0"
+                                                  cellspacing="0"
+                                                  border="0"
+                                                  width="278"
+                                                  align="right"
+                                                >
+                                                  <tbody>
+                                                    <tr>
+                                                      <td valign="top">
+                                                        <table
+                                                          class="
+                                                            responsive-table
+                                                          "
+                                                          width="100%"
+                                                          cellpadding="0"
+                                                          cellspacing="0"
+                                                          border="0"
+                                                          style="width: 100%"
+                                                        >
+                                                          <tbody>
+                                                            <!-- 15px -->
+                                                            <!-- <tr>
+                                                              <td height="15">
+                                                                <div
+                                                                  style="
+                                                                    width: 100%;
+                                                                    height: 15px;
+                                                                  "
+                                                                ></div>
+                                                              </td>
+                                                            </tr> -->
+                                                            <!-- <tr>
+                                                              <td
+                                                                align="left"
+                                                                valign="top"
+                                                              >
+                                                                <b
+                                                                  style="
+                                                                    font-family: 'Microsoft YaHei',
+                                                                      Arial,
+                                                                      Helvetica,
+                                                                      sans-serif;
+                                                                    font-size: 19px;
+                                                                    line-height: 23px;
+                                                                    color: rgb(
+                                                                      0,
+                                                                      0,
+                                                                      0
+                                                                    );
+                                                                  "
+                                                                  >Lorem ipsum
+                                                                  dolor sit
+                                                                  amet, sed
+                                                                  debet singulis
+                                                                  oportere ea</b
+                                                                >
+                                                              </td>
+                                                            </tr> -->
+                                                            <tr>
+                                                              <td height="10">
+                                                                <div
+                                                                  style="
+                                                                    width: 100%;
+                                                                    height: 10px;
+                                                                  "
+                                                                ></div>
+                                                              </td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td
+                                                                align="left"
+                                                                valign="top"
+                                                              >
+                                                                <div
+                                                                  style="
+                                                                    font-family: 'Microsoft YaHei',
+                                                                      Arial,
+                                                                      Helvetica,
+                                                                      sans-serif;
+                                                                    font-size: 16px;
+                                                                    line-height: 20px;
+                                                                    color: rgb(
+                                                                      0,
+                                                                      0,
+                                                                      0
+                                                                    );
+                                                                  "
+                                                                >
+                                                                  {{@$value.descriptionText}}<br />
+                                                                  <br />
+
+                                                                  <a
+                                                                    rel="noopener noreferrer"
+                                                                    href="{{@$value.url}}"
+                                                                    target="_blank"
+                                                                    title="{{@$value.buttonText}}"
+                                                                    class="
+                                                                      font3
+                                                                    "
+                                                                    style="
+                                                                      font-family: 'Microsoft YaHei',
+                                                                        Arial,
+                                                                        Helvetica,
+                                                                        sans-serif;
+                                                                      font-size: 16px;
+                                                                      line-height: 26px;
+                                                                      color: #0076cb;
+                                                                      text-decoration: none;
+                                                                    "
+                                                                    data-sap-hpa-ceimo-link-alias="CTA"
+                                                                    >{{@$value.buttonText}}</a
+                                                                  >
+                                                                </div>
+                                                              </td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table>
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                                <!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                        <!-- 33-66-Pictogram -->
+                                        <!-- 33-66-Partner-Logo -->
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <!-- 32px -->
+                    <tr>
+                      <td height="32">
+                        <div style="width: 100%; height: 32px"></div>
+                      </td>
+                    </tr>
+                    <!-- 8px -->
+                    <tr bgcolor="#FFFFFF" style="color: #ffffff">
+                      <td height="8">
+                        <div style="width: 100%; height: 8px"></div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                {{/each}} {{/if}}
+                <!---OFFER_SECTION_END-->
                 <!-- BUTTON_SECTION_BEGIN -->
                 <!-- BUTTON_SECTION_END-->
                 <!-- Banner_SECTION_BEGIN -->

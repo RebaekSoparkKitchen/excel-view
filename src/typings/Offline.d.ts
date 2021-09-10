@@ -1,20 +1,23 @@
 // offline event
-interface Guest {
+export interface Guest {
   name: string;
   title: string;
   company: string;
   introduction: string;
 }
 
-interface ScheduleItem {
+export interface ScheduleItem {
   time: string;
   content: string;
-  guest: Guest[];
+  details?: string;
+  guests: Guest[];
 }
 
-interface Schedule {
-  title: string;
+export interface Schedule {
+  title?: string;
+  hasGuestCol: boolean;
   agenda: ScheduleItem[];
+  remark?: string;
 }
 
 interface Contact {

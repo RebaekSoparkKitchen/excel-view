@@ -11,6 +11,7 @@ const path = require('path');
 const pangu = require('pangu');
 const juice = require('juice');
 const minify = require('html-minifier').minify;
+import { isGuestIntroExist, isGuestColExist } from './Views';
 
 // const spacer = require('../../helpers/spacer');
 

@@ -49,8 +49,8 @@ const generate = async (
         __dirname + `/../pages/${Utils.capital(category)}/index.art.html`,
         data
       );
-      const compiledView = Render.addSpace(view);
-      return Map({ name, path, content: compiledView });
+      // const compiledView = Render.addSpace(view);
+      return Map({ name, path, content: view });
     })
   );
   return <File[]>List(await outputs).toJS();
@@ -71,7 +71,7 @@ const mkMulDir = (dirPath: string) => {
 };
 
 // for each file node, build compiled file in the dist
-const build = async (
+const buildSingle = async (
   node: FileNode,
   distPath: string,
   category: 'webinar' | 'offline' | 'asset'
@@ -113,8 +113,16 @@ const travel = async (
   }
 };
 
+const build = (
+  origin: string,
+  dist: string,
+  category: 'asset' | 'webinar' | 'offline'
+) => {
+  const tree = fileTree(origin);
+  travel(tree, dist, category, buildSingle);
+};
 // test script
-const cat = 'asset';
-const dist = `../../${cat}/dist`;
-const tree = fileTree(`../../${cat}/excel`);
-travel(tree, dist, cat, build);
+// const cat = 'asset';
+// const dist = `../../${cat}/excel`;
+// const tree = fileTree(`../../${cat}/excel`);
+export { build };

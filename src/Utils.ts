@@ -1,6 +1,7 @@
 import Render from './service/Render';
 import { Guest } from './typings/Offline';
 import axios from 'axios';
+import { ScheduleItem } from './typings/Offline';
 const replaceall = require('replaceall');
 const _ = require('lodash');
 const cheerio = require('cheerio');
@@ -166,17 +167,32 @@ function agendaProcess(agendas, guests) {
   const parsedAgendas = [];
   for (let agenda of agendas) {
     const parsedAgenda = [];
-    for (let item of agenda) {
-      const parsedItem = { time: null, content: null, guests: null };
-      parsedItem.time = `${item[0]} - ${item[1]}`;
-      parsedItem.content = item[2];
+    let hasGuestCol = false;
+    for (let item of agenda.data) {
+      const time = `${item[0]} - ${item[1]}`;
+      const content = item[2];
       const names = item[3];
+      const details = item[4];
       const parsedNameList = nameParser(names);
-
-      parsedItem.guests = namesMatch(parsedNameList, guests);
+      if (names && names.length > 0 && names.trim() != '嘉宾') {
+        hasGuestCol = true;
+      }
+      const parsedGuests = namesMatch(parsedNameList, guests);
+      const parsedItem: ScheduleItem = {
+        time,
+        content,
+        details,
+        guests: parsedGuests,
+      };
       parsedAgenda.push(parsedItem);
     }
-    parsedAgendas.push(parsedAgenda);
+
+    parsedAgendas.push({
+      hasGuestCol,
+      agenda: parsedAgenda,
+      remark: agenda.remark,
+      title: agenda.title,
+    });
   }
   return parsedAgendas;
 }

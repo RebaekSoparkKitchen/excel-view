@@ -11,13 +11,17 @@ export default function transfer(rawData): Offline {
   const { basic, agendas, guests: rawGuests } = rawData;
   const rawAgendaData = agendas.map((agenda) => agenda.data);
   const agendaTitles = agendas.map((agenda) => Utils.textProcess(agenda.title));
+  const agendaRemarks = agendas.map((agenda) =>
+    Utils.textProcess(agenda.remark)
+  );
 
   const guests = Utils.guestsProcess(rawGuests);
+
   //console.log(this.namesMatch(['王二', '张三'], guests));
   const previewText = '为您带来 SAP 最新资讯';
   const subject = basic['邮件标题'];
   const banner = basic['Banner'];
-  const title = basic['正文标题'];
+  const title = Utils.textProcess(basic['正文标题'], 'single');
   const code = basic['CRM Campaign Code'];
   const mainText = Utils.paragraphText(
     Utils.htmlTextProcess(basic['邮件正文'], null)
@@ -29,7 +33,13 @@ export default function transfer(rawData): Offline {
   const city = basic['会议城市'];
   const meetingLocation = basic['详细地点'];
   const qr = basic['qr'];
-  const schedule = Utils.agendaProcess(rawAgendaData, guests);
+  const schedule = Utils.agendaProcess(agendas, guests);
+  // console.log(agendas);
+  // console.log(schedule[0].agenda);
+
+  // console.log(schedule[0].agenda);
+  // schedule[0].agenda.forEach((x) => console.log(x));
+
   const scheduleTitle = agendaTitles;
   const promotionButtonColor: ButtonColor = 'blue' as ButtonColor;
   const options = {

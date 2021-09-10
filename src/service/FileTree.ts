@@ -22,7 +22,7 @@ const fileTree = (dirPath: string): DirNode => {
   const genNode = (dirPath: string): Map<string, string | List<any>> => {
     const name = path.basename(dirPath);
     const fullPath = path.resolve(dirPath);
-    // rootPath is using Lexical Scope
+    // rootPath is using closure
     const relativePath = path.relative(rootPath, dirPath);
     if (fs.statSync(dirPath).isFile())
       return Map({
