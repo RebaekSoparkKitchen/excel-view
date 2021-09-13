@@ -1,15 +1,11 @@
+import { ScheduleItem, Schedule } from './Offline';
+
 // webinar event
 interface Guest {
   name: string;
   title: string;
   company: string;
   introduction: string;
-}
-
-interface ScheduleItem {
-  time: string;
-  content: string;
-  guest: Guest[];
 }
 
 interface Button {
@@ -49,7 +45,7 @@ export interface Webinar {
   meetingUrl: string;
   registerUrl?: string;
   qr: string;
-  schedule: ScheduleItem[];
+  schedule: Schedule[];
   title: string;
   ioi: string;
   options: Options;

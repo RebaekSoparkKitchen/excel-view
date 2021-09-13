@@ -53,7 +53,6 @@ export interface Offline {
   meetingTime: any;
   qr: string;
   schedule: Schedule[];
-  scheduleTitle: string[];
   ioi: string;
   options: Options;
   contact: Contact;

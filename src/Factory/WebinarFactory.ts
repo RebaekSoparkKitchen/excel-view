@@ -27,7 +27,7 @@ const transfer = async (rawData): Promise<Webinar> => {
   const registerUrl = basic['报名链接'];
   const meetingAudience = basic['参会对象'];
   const qr = await Utils.qrFactory(meetingUrl);
-  const schedule = Utils.agendaProcess(rawAgendaData, guests);
+  const schedule = Utils.agendaProcess(agendas, guests);
 
   const title = Utils.textProcess(basic['正文标题'], 'single');
   const ioi = '';

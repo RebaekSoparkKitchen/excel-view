@@ -9,6 +9,7 @@ import Utils from '../Utils';
 import fileTree from './FileTree';
 const path = require('path');
 const template = require('art-template');
+const traverse = require('traverse');
 
 import DataParser from '../DataParser';
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
@@ -43,7 +44,12 @@ const generate = async (
       const name =
         v.alias.length > 0 ? `(${v.alias.join('-')})${htmlName}` : htmlName;
 
-      const data = await transfer(v.data);
+      let data = await transfer(v.data);
+      // this is special, I would like to add ch-en space in data side, so it like a middle-ware insert here
+      traverse(data).forEach(function (x) {
+        if (typeof x === 'string') this.update(Render.addSpace(x));
+      });
+
       const path = savePath(node, dist);
       const view = template(
         __dirname + `/../pages/${Utils.capital(category)}/index.art.html`,

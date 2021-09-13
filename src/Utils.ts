@@ -227,9 +227,9 @@ function guestsProcess(rawGuests) {
   const parsedGuests = [];
   for (let guest of rawGuests) {
     const parsedGuest = {
-      name: guest['姓名'].trim(),
-      title: guest['职称'].trim(),
-      introduction: textProcess(guest['简介'].trim(), 'single'),
+      name: guest['姓名']?.trim(),
+      title: guest['职称']?.trim(),
+      introduction: textProcess(guest['简介']?.trim(), 'single'),
       company: '',
     };
     parsedGuests.push(parsedGuest);

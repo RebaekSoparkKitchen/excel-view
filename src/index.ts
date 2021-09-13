@@ -18,6 +18,6 @@ const main = (cat: 'asset' | 'webinar' | 'offline') => {
   build(templatePath, templatePath, cat);
 };
 
-// main('asset');
-// main('webinar');
+main('asset');
+main('webinar');
 main('offline');

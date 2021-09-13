@@ -9,15 +9,10 @@ const template = require('art-template');
 
 export default function transfer(rawData): Offline {
   const { basic, agendas, guests: rawGuests } = rawData;
-  const rawAgendaData = agendas.map((agenda) => agenda.data);
-  const agendaTitles = agendas.map((agenda) => Utils.textProcess(agenda.title));
-  const agendaRemarks = agendas.map((agenda) =>
-    Utils.textProcess(agenda.remark)
-  );
+  console.log(basic);
 
   const guests = Utils.guestsProcess(rawGuests);
 
-  //console.log(this.namesMatch(['王二', '张三'], guests));
   const previewText = '为您带来 SAP 最新资讯';
   const subject = basic['邮件标题'];
   const banner = basic['Banner'];
@@ -34,13 +29,7 @@ export default function transfer(rawData): Offline {
   const meetingLocation = basic['详细地点'];
   const qr = basic['qr'];
   const schedule = Utils.agendaProcess(agendas, guests);
-  // console.log(agendas);
-  // console.log(schedule[0].agenda);
 
-  // console.log(schedule[0].agenda);
-  // schedule[0].agenda.forEach((x) => console.log(x));
-
-  const scheduleTitle = agendaTitles;
   const promotionButtonColor: ButtonColor = 'blue' as ButtonColor;
   const options = {
     buttonColor: rawData.options['按钮颜色']
@@ -77,7 +66,6 @@ export default function transfer(rawData): Offline {
     qr,
     guests,
     schedule,
-    scheduleTitle,
     options,
     ioi,
     contact,
