@@ -10,7 +10,8 @@ import fileTree from './FileTree';
 const path = require('path');
 const template = require('art-template');
 const traverse = require('traverse');
-
+const replaceall = require('replaceall');
+import { process } from './TextProcessor';
 import DataParser from '../DataParser';
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 
@@ -45,9 +46,14 @@ const generate = async (
         v.alias.length > 0 ? `(${v.alias.join('-')})${htmlName}` : htmlName;
 
       let data = await transfer(v.data);
-      // this is special, I would like to add ch-en space in data side, so it like a middle-ware insert here
+      // this is special, I would like to add ch-en space in data side, so it's like a middle-ware insert here
       traverse(data).forEach(function (x) {
-        if (typeof x === 'string') this.update(Render.addSpace(x));
+        if (typeof x === 'string') {
+          // console.log(x);
+
+          this.update(process(x));
+          // this.update(Utils.quotationProcess(x));
+        }
       });
 
       const path = savePath(node, dist);
@@ -55,7 +61,6 @@ const generate = async (
         __dirname + `/../pages/${Utils.capital(category)}/index.art.html`,
         data
       );
-      // const compiledView = Render.addSpace(view);
       return Map({ name, path, content: view });
     })
   );

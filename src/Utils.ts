@@ -151,15 +151,25 @@ function textProcess(text, type = 'double') {
 
 // plus timezone offset and parse to string
 function dateProcess(dateStr: string) {
-  // const timeZoneOffset = 8;
-  // if (!date) return '';
-  // date.setHours(date.getHours() + timeZoneOffset);
-  // return `${date.getFullYear()} 年 ${
-  //   date.getMonth() + 1
-  // } 月 ${date.getDate()} 日`;
-  if (typeof dateStr === 'string') {
-    const date = dateStr.split('/');
+  if (typeof dateStr !== 'string') return;
+  const dateList = dateStr.split(';');
+  if (dateList.length === 1) {
+    const date = dateList[0].split('/');
     return `${date[2]} 年 ${~~date[1]} 月 ${~~date[0]} 日`;
+  } else {
+    const firstDate = dateList[0].trim().split('/');
+    const secondDate = dateList[1].trim().split('/');
+    let secondYear =
+      firstDate[2] === secondDate[2] ? '' : `${secondDate[2]} 年`;
+    let secondMonth =
+      firstDate[1] === secondDate[1] && !secondYear
+        ? ''
+        : `${secondDate[1]} 月`;
+    let secondDay = `${secondDate[0]} 日`;
+
+    return `${firstDate[2]} 年 ${~~firstDate[1]} 月 ${~~firstDate[0]} 日 - ${
+      secondYear ? secondYear + ' ' : secondYear
+    }${secondMonth ? secondMonth + ' ' : secondMonth}${secondDay}`;
   }
 }
 
@@ -376,6 +386,7 @@ export default {
   textProcess,
   dateProcess,
   agendaProcess,
+  findPatterns,
   namesMatch,
   nameParser,
   guestsProcess,

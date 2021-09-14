@@ -9,7 +9,6 @@ const template = require('art-template');
 
 export default function transfer(rawData): Offline {
   const { basic, agendas, guests: rawGuests } = rawData;
-  console.log(basic);
 
   const guests = Utils.guestsProcess(rawGuests);
 
