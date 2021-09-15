@@ -149,7 +149,11 @@ function textProcess(text, type = 'double') {
   return str;
 }
 
-// plus timezone offset and parse to string
+/**
+ *
+ * @param dateStr means it is a date string
+ * @returns the date shows in the email
+ */
 function dateProcess(dateStr: string) {
   if (typeof dateStr !== 'string') return;
   const dateList = dateStr.split(';');
