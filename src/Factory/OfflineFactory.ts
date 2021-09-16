@@ -14,7 +14,7 @@ export default function transfer(rawData): Offline {
 
   const previewText = '为您带来 SAP 最新资讯';
   const subject = basic['邮件标题'];
-  const banner = basic['Banner'];
+  const banner = basic['Banner']?.trim();
   const title = Utils.textProcess(basic['正文标题'], 'single');
   const code = basic['CRM Campaign Code'];
   const mainText = Utils.paragraphText(

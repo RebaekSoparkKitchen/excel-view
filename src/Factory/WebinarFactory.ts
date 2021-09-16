@@ -12,7 +12,7 @@ const transfer = async (rawData): Promise<Webinar> => {
   const rawAgendaData = agendas.map((agenda) => agenda.data);
   const guests = Utils.guestsProcess(rawGuests);
   const previewText = '为您带来 SAP 的最新咨询';
-  const banner = basic['Banner'];
+  const banner = basic['Banner']?.trim();
   const code = basic['CRM Campaign Code'];
   const subject = basic['邮件标题'];
   const button = { text: '立即报名', href: basic['报名链接'] };

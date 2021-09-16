@@ -3,7 +3,8 @@
 销售人员进行报名，或扫描下方二维码进行在线报名。会务组审核通过后，将于会前为您发出参会确认函。
 {{/block}} {{block
 'qr_lower_text'}}如您有任何疑问，请随时联系会务组：{{contact.name}}，{{if
-contact.mobile}}手机：{{contact.mobile}}，{{/if}}{{if
-contact.email}}邮箱：{{contact.email}}{{/if}}{{/block}} {{block 'textAlign'}}
-{{set text_align='left'}} {{/block}} {{block 'textQrMargin'}}{{set
-text_qr_margin=10}}{{/block}}
+contact.mobile}}手机：{{contact.mobile}}，{{/if}}{{if contact.email}}邮箱：<a
+  href="mailto:{{contact.email}}"
+  >{{contact.email}}</a
+>{{/if}}{{/block}} {{block 'textAlign'}} {{set text_align='left'}} {{/block}}
+{{block 'textQrMargin'}}{{set text_qr_margin=10}}{{/block}}
