@@ -169,6 +169,7 @@
                                                     color: rgb(255, 255, 255);
                                                   "
                                                 >
+                                                {{if meetingUrl}}
                                                 {{block 'button'}}
                                                 {{if options.buttonColor === 'black'}}
                                                   <table
@@ -199,7 +200,7 @@
                                                         >
                                                           <p style="margin: 0">
                                                             <a
-                                                              href={{@'\"' + registerUrl + '\"'}}
+                                                              href={{@'\"' + button.href + '\"'}}
                                                               target="_blank"
                                                               style="
                                                                 font-family: Arial;
@@ -273,6 +274,7 @@
                                                   </table>
                                                   {{/if}}
                                                   {{/block}}
+                                                  {{/if}}
                                                 </div>
                                               </td>
                                             </tr>

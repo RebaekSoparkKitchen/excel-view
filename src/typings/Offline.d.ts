@@ -1,3 +1,5 @@
+import { Button } from './Webinar';
+
 // offline event
 export interface Guest {
   name: string;
@@ -45,6 +47,8 @@ export interface Offline {
   title: string;
   code: string;
   subject: string;
+  meetingUrl?: string;
+  button?: Button;
   team?: string;
   guests: Guest[];
   hasGuestCol: boolean;
