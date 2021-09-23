@@ -155,23 +155,24 @@ function textProcess(text, type = 'double') {
  * @returns the date shows in the email
  */
 function dateProcess(dateStr: string) {
-  if (typeof dateStr !== 'string') return;
+  if (typeof dateStr !== 'string') return dateStr;
   const dateList = dateStr.split(';');
   if (dateList.length === 1) {
     const date = dateList[0].split('/');
+
     return `${date[2]} 年 ${~~date[1]} 月 ${~~date[0]} 日`;
   } else {
     const firstDate = dateList[0].trim().split('/');
     const secondDate = dateList[1].trim().split('/');
     let secondYear =
-      firstDate[2] === secondDate[2] ? '' : `${secondDate[2]} 年`;
+      firstDate[0] === secondDate[0] ? '' : `${secondDate[0]} 年`;
     let secondMonth =
       firstDate[1] === secondDate[1] && !secondYear
         ? ''
         : `${secondDate[1]} 月`;
-    let secondDay = `${secondDate[0]} 日`;
+    let secondDay = `${secondDate[2]} 日`;
 
-    return `${firstDate[2]} 年 ${~~firstDate[1]} 月 ${~~firstDate[0]} 日 - ${
+    return `${firstDate[0]} 年 ${~~firstDate[1]} 月 ${~~firstDate[2]} 日 - ${
       secondYear ? secondYear + ' ' : secondYear
     }${secondMonth ? secondMonth + ' ' : secondMonth}${secondDay}`;
   }

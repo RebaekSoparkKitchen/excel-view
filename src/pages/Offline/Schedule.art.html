@@ -1,17 +1,25 @@
 {{extend '../../components/Schedule.art.html'}} {{block 'meetingLocation'}}
 <tr>
   <td align="left">
-    <div
-      style="
-        font-size: 16px;
-        font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif;
-        text-align: left;
-        color: rgb(0, 0, 0);
-      "
-    >
-      <b>会议地点：</b>
-      <span style="color: rgb(0, 0, 0)"> {{@meetingLocation}} </span>
-    </div>
+    <table>
+      <tr>
+        <td style="vertical-align: top">
+          <div
+            style="
+              font-size: 16px;
+              font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif;
+              text-align: left;
+              color: rgb(0, 0, 0);
+            "
+          >
+            <b>会议地点：</b>
+          </div>
+        </td>
+        <td>
+          <span style="color: rgb(0, 0, 0)"> {{@meetingLocation}} </span>
+        </td>
+      </tr>
+    </table>
   </td>
 </tr>
 <tr>

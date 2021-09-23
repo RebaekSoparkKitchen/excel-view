@@ -22,10 +22,11 @@ export default function transfer(rawData): Offline {
   );
 
   const hasGuestCol = true;
-  const hasGuestIntro = true;
+  const hasGuestIntro =
+    guests.filter((guest) => !!guest.introduction).length > 0;
   const meetingTime = Utils.dateProcess(basic['会议日期']);
   const city = basic['会议城市'];
-  const meetingLocation = basic['详细地点'];
+  const meetingLocation = Utils.textProcess(basic['详细地点'], 'single');
   const qr = basic['qr'];
   const schedule = Utils.agendaProcess(agendas, guests);
 
