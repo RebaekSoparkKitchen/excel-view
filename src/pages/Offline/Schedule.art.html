@@ -1,4 +1,5 @@
-{{extend '../../components/Schedule.art.html'}} {{block 'meetingLocation'}}
+{{extend '../../components/Schedule.art.html'}} {{block 'meetingLocation'}} {{if
+meetingLocation}}
 <tr>
   <td align="left">
     <table>
@@ -27,4 +28,4 @@
     <div style="width: 100%; height: 15px"></div>
   </td>
 </tr>
-{{/block}}
+{{/if}} {{/block}}

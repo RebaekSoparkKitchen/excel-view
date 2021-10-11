@@ -51,6 +51,9 @@ export default async function transfer(rawData): Promise<Offline> {
       text: '',
       url: '',
     },
+    guestDisplay: rawData.options['嘉宾介绍']
+      ? rawData.options['嘉宾介绍']
+      : false,
   };
   const ioi = '';
   const contact = {
