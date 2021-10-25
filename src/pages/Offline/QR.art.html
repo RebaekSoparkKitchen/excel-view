@@ -1,4 +1,5 @@
-{{extend '../../components/QR.art.html'}} {{block 'qr_upper_text'}}
+{{extend '../../components/QR.art.html'}} {{if contact.name || contact.mobile ||
+contact.email}} {{block 'qr_upper_text'}}
 本活动仅对受邀人士开放，座席有限，请您直接联系对应的 SAP
 销售人员进行报名，或扫描下方二维码进行在线报名。会务组审核通过后，将于会前为您发出参会确认函。
 {{/block}} {{block
@@ -7,4 +8,6 @@ contact.mobile}}手机：{{contact.mobile}}，{{/if}}{{if contact.email}}邮箱�
   href="mailto:{{contact.email}}"
   >{{contact.email}}</a
 >{{/if}}{{/block}} {{block 'textAlign'}} {{set text_align='left'}} {{/block}}
-{{block 'textQrMargin'}}{{set text_qr_margin=10}}{{/block}}
+{{block 'textQrMargin'}}{{set text_qr_margin=10}}{{/block}} {{else}} {{block
+'qr_upper_text'}} SAP 诚挚期待您的参与！ {{/block}} {{block 'qr_lower_text'}}
+扫描二维码，注册参会 {{/block}} {{/if}}

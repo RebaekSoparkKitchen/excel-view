@@ -34,8 +34,11 @@ export default async function transfer(rawData): Promise<Offline> {
   const hasGuestIntro =
     guests.filter((guest) => !!guest.introduction).length > 0;
   const meetingTime = Utils.dateProcess(basic['会议日期']);
-  const city = basic['会议城市'];
-  const meetingLocation = Utils.textProcess(basic['详细地点'], 'single');
+  const city = basic['会议城市']?.trim();
+  const meetingLocation = Utils.textProcess(
+    basic['详细地点']?.trim(),
+    'single'
+  );
   const schedule = Utils.agendaProcess(agendas, guests);
 
   const promotionButtonColor: ButtonColor = 'blue' as ButtonColor;
